@@ -80,6 +80,15 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+# Make Homeshick available
+# https://github.com/andsens/homeshick
+# must be before oh-my-zsh
+if [ -f ~/.homesick/repos/homeshick/homeshick.sh ]; then
+    source ~/.homesick/repos/homeshick/homeshick.sh
+    fpath=(~/.homesick/repos/homeshick/completions $fpath)
+fi
+
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -107,6 +116,66 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Personal Additions
+## Copied from my .bashrc
+# https://github.com/MinchinWeb/dotfiles/blob/master/home/.bashrc
+# consider moving to a common file?
+
+## Path Additions Functions
+# https://superuser.com/a/753948/447564
+pathappend() {
+    for ARG in "$@"
+    do
+        ARG="${ARG/#\~/$HOME}"  # expand ~ into Home
+        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+            PATH="${PATH:+"$PATH:"}$ARG"
+        fi
+    done
+}
+
+pathprepend() {
+    for ((i=$#; i>0; i--)); 
+    do
+        ARG=${!i}
+        ARG="${ARG/#\~/$HOME}"  # expand ~ into Home
+        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+            PATH="$ARG${PATH:+":$PATH"}"
+        fi
+    done
+}
+
+# Reload this configuration file
+alias refresh-env='source ~/.zshrc && echo "Reloaded Zsh Configuration"'
+# sort environmental variables
+alias env='env | sort'
+# automatically create parent directories as needed
+alias mkdir='mkdir -pv'
+# run wget in 'continue' mode (auto pick up broken/half-finished downloads)
+alias wget='wget -c'
+# only run 4 pings (like Windows, rather than forever)
+alias ping='ping -c 4'
+# when removing files, do so interactively
+alias rm='rm -i'
+
+# set editor to vi (default was nano on Arch/Majaro)
+if [ -f /usr/bin/vi ]; then
+    export EDITOR=/usr/bin/vi
+fi
+
+# Add Rust's user-compiled pakcages bin folder to PATH
+pathprepend '~/.cargo/bin/'
+# Add Python's user-installed packages bin folder to PATH
+pathprepend '~/.local/bin/'
+pathprepend '~/bin/'
+
+# homeshick added above
+
+# Hit `Esc` twice to clear the line
+# note there is a small delay on this
+# https://unix.stackexchange.com/questions/30987/windows-shell-escape-key-delete-whole-line-equivalent-in-bash
+bind '"\e\e":kill-whole-line'
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
