@@ -122,29 +122,6 @@ source $ZSH/oh-my-zsh.sh
 # https://github.com/MinchinWeb/dotfiles/blob/master/home/.bashrc
 # consider moving to a common file?
 
-## Path Additions Functions
-# https://superuser.com/a/753948/447564
-pathappend() {
-    for ARG in "$@"
-    do
-        ARG="${ARG/#\~/$HOME}"  # expand ~ into Home
-        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-            PATH="${PATH:+"$PATH:"}$ARG"
-        fi
-    done
-}
-
-pathprepend() {
-    for ((i=$#; i>0; i--)); 
-    do
-        ARG=${!i}
-        ARG="${ARG/#\~/$HOME}"  # expand ~ into Home
-        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-            PATH="$ARG${PATH:+":$PATH"}"
-        fi
-    done
-}
-
 # Reload this configuration file
 alias refresh-env='source ~/.zshrc && echo "Reloaded Zsh Configuration"'
 # sort environmental variables
@@ -163,11 +140,14 @@ if [ -f /usr/bin/vi ]; then
     export EDITOR=/usr/bin/vi
 fi
 
+# Path additions
+# https://stackoverflow.com/a/18077919/4276230
+
 # Add Rust's user-compiled pakcages bin folder to PATH
-pathprepend '~/.cargo/bin/'
+path=('~/.cargo/bin/', $path)
 # Add Python's user-installed packages bin folder to PATH
-pathprepend '~/.local/bin/'
-pathprepend '~/bin/'
+path=('~/.local/bin/', $path)
+path=('~/bin/', $path)
 
 # homeshick added above
 
