@@ -154,7 +154,7 @@ path=('$HOME/bin/', $path)
 # Hit `Esc` twice to clear the line
 # note there is a small delay on this
 # https://unix.stackexchange.com/questions/30987/windows-shell-escape-key-delete-whole-line-equivalent-in-bash
-bind '"\e\e":kill-whole-line'
+bindkey "\e\e" kill-whole-line
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
