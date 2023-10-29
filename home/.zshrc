@@ -144,10 +144,10 @@ fi
 # https://stackoverflow.com/a/18077919/4276230
 
 # Add Rust's user-compiled pakcages bin folder to PATH
-path=('~/.cargo/bin/', $path)
+path=('$HOME/.cargo/bin/', $path)
 # Add Python's user-installed packages bin folder to PATH
-path=('~/.local/bin/', $path)
-path=('~/bin/', $path)
+path=('$HOME/.local/bin/', $path)
+path=('$HOME/bin/', $path)
 
 # homeshick added above
 
