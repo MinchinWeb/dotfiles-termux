@@ -160,3 +160,6 @@ bindkey "\e\e" kill-whole-line
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+# Created by `pipx` on 2024-04-07 20:46:10
+export PATH="$PATH:/data/data/com.termux/files/home/.local/bin"
